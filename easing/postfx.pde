@@ -1,11 +1,14 @@
 import ch.bildspur.postfx.builder.*;
 import ch.bildspur.postfx.pass.*;
 import ch.bildspur.postfx.*;
+import com.jogamp.opengl.*;
 
+GL3                        gl;
 PostFX                     fx;
 
 void SetupPostFX(PApplet app) {
   fx = new PostFX(app);
+  gl = GLContext.getCurrentGL().getGL3();
 }
 
 void ApplyPostFX() {
