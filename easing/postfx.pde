@@ -11,8 +11,9 @@ void SetupPostFX(PApplet app) {
   gl = GLContext.getCurrentGL().getGL3();
 }
 
-void ApplyPostFX() {
-  fx.render()
+void ApplyPostFX(PGraphics pg_) {
+  blendMode(SCREEN);
+  fx.render(pg_)
     .bloom(0.2, 10, 5)
     //.invert()
     //.toon()
