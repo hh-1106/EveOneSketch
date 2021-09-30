@@ -6,9 +6,10 @@ class TaiChiSystem {
     ts = new ArrayList<Taichi>();
 
     int m = 100;
+    //for (int i=0; i<2; i++)
+    //  ts.add(new Taichi(random(m, width-m), random(m, height-m), random(200, 500)));
 
-    for (int i=0; i<6; i++)
-      ts.add(new Taichi(random(m, width-m), random(m, height-m), random(200, 500)));
+    ts.add(new Taichi(width/2, height/2, 378));
   }
 
   void update() {
