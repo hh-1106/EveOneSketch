@@ -17,7 +17,7 @@ void ApplyPostFX(PGraphics pg_) {
     .bloom(0.2, 10, 5)
     //.invert()
     //.toon()
-    //.rgbSplit(30)
+    .rgbSplit(30)
     .vignette(0.9, 0.4)
     .compose();
 }

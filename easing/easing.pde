@@ -3,10 +3,10 @@ PGraphics  pg;
 TaiChiSystem     TS;
 
 void setup() {
-  size(900, 450, P2D);
+  size(1000, 500, P2D);
   frameRate(60);
   smooth(8);
-  surface.setLocation(300, 300);
+  surface.setLocation(250, 300);
 
   pg = createGraphics(width, height, P2D);
   EA = new Ease();

@@ -11,13 +11,9 @@ class Taichi {
     this.x = x;
     this.y = y;
     this.size = size;
-    T = 120;
-
-    shadow = createGraphics(int(size * 0.618), int(size * 0.618));
-    shadow.beginDraw();
-    shadow.clear();
-    rotateTaichi(shadow, shadow.width/2, shadow.height/2, shadow.width, 1);
-    shadow.endDraw();
+    T = floor(random(60, 180));
+    T = 180;
+    shadow = createShadow();
   }
 
   void update() {
@@ -25,22 +21,30 @@ class Taichi {
   }
 
   void render(PGraphics pg) {
-    
     renderShadow(pg);
-    
+
     float t1 = EA.clamp(t, 0, 0.5, true);
     rotateTaichi(pg, x, y, size * 0.618, t1);
   }
 
+  PGraphics createShadow() {
+    PGraphics pg = createGraphics(int(size * 0.618), int(size * 0.618));
+    pg.beginDraw();
+    pg.clear();
+    rotateTaichi(pg, pg.width/2, pg.height/2, pg.width, 1);
+    pg.endDraw();
+    return pg;
+  }
+
   void renderShadow(PGraphics pg) {
     float t5 = EA.clamp(t, 0.2, 0.7, true);
-    float a  = 255 * EA.easeInPower(1-t5, 2);
-    float d  = size * 1.1 * EA.easeOutExpo(t5);
- 
+    float alpha = 255 * EA.easeInOutPower(1-t5, 2);
+    float d = size * 1.1 * EA.easeOutExpo(t5);
+
     pg.beginDraw();
     pg.push();
     pg.imageMode(CENTER);
-    pg.tint(255, a);
+    pg.tint(255, alpha);
     float angle = 2 * TWO_PI * EA.easeOutExpo(t5);
     pg.translate(x, y);
     pg.rotate(0.02+angle);
@@ -50,21 +54,22 @@ class Taichi {
   }
 
   void renderBlendDifference(PGraphics pg) {
-    float t2 = EA.clamp(t, 0.2, 1, true);
-    float t3 = EA.clamp(t, 0.3, 1, true);
-    float t4 = EA.clamp(t, 0.7, 1, true);
+    float t2 = EA.clamp(t, 0.1, 0.8, true);
+    float t3 = EA.clamp(t, 0.2, 0.8, true);
+    float t4 = EA.clamp(t, 0.8, 1, true);
 
     pg.push();
     pg.translate(x, y);
-    expandRipple(pg, size * 1, t2);
-    expandRipple(pg, size * 1.2, t3);
-    expandRipple(pg, size * 1.2, 1-t4);
+    expandRipple(pg, size * 0.9, t2);
+    expandRipple(pg, size * 1.1, t3);
+    expandRipple(pg, size * 1.1, 1-t4);
     pg.pop();
   }
 
   void expandRipple(PGraphics pg, float size, float t) {
     float d  = size * EA.easeOutExpo(t);
-    float sw = 10 * EA.easeInExpo(1-t);
+    float sw = 12   * EA.easeInExpo(1-t);
+
     sw = max(sw, 0);
     pg.noFill();
     pg.stroke(BLACK);
