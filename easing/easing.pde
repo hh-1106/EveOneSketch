@@ -1,9 +1,10 @@
 Ease       EA;
 PGraphics  pg;
-TaiChiSystem     TS;
+MGSystem   TS;
 
 void setup() {
-  size(1000, 500, P2D);
+  //size(1000, 500, P2D);
+  size(2000, 900, P2D);
   frameRate(60);
   smooth(8);
   surface.setLocation(250, 300);
@@ -11,11 +12,10 @@ void setup() {
   pg = createGraphics(width, height, P2D);
   EA = new Ease();
   SetupPostFX(this);
-  TS = new TaiChiSystem();
+  TS = new MGSystem();
 }
 
 void draw() {
-
   pg.beginDraw();
   TS.update();
   TS.render(pg);

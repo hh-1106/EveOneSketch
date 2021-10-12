@@ -1,23 +1,11 @@
-class Taichi {
-
-  float x, y;
-  float size;
-  int      T;
-  float    t;
+class Taichi extends MG {
 
   PGraphics shadow;
 
   Taichi(float x, float y, float size) {
-    this.x = x;
-    this.y = y;
-    this.size = size;
-    T = floor(random(60, 180));
-    T = 180;
+    super(x, y, size);
+    T = floor(random(120, 180));
     shadow = createShadow();
-  }
-
-  void update() {
-    t = (frameCount % T) / float(T);
   }
 
   void render(PGraphics pg) {
@@ -72,7 +60,7 @@ class Taichi {
 
     sw = max(sw, 0);
     pg.noFill();
-    pg.stroke(BLACK);
+    pg.stroke(WHITE);
     pg.strokeWeight(sw);
     pg.ellipse(0, 0, d, d);
   }
