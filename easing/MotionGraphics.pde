@@ -1,27 +1,30 @@
 class MG {
 
-  float x, y;
-  float size;
-  int      T;
-  float    t;
+  float   x, y;
+  int        T;
+  int   startF;
+  float      t;
+  boolean done;
 
   MG() {
   }
 
-  MG(float x, float y, float size) {
+  MG(float x, float y) {
     this.x = x;
     this.y = y;
-    this.size = size;
-    T = 120;
+    T      = floor(random(60, 120));
+    startF = frameCount;
   }
 
   void update() {
-    t = (frameCount % T) / float(T);
+    int f = (frameCount-startF);
+    t    = (f % T) / float(T);
+    done = f % T == 0;
   }
 
   void render(PGraphics pg) {
   }
 
-  void renderBlendDifference(PGraphics pg) {
+  void fade() {
   }
 }

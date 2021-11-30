@@ -4,55 +4,48 @@ class Arc extends MG {
   float d2;
   float angle;
   float len;
-  int   dir;
   int   off;
 
-  Arc(float x, float y, float size) {
-    super(x, y, size);
-    T = floor(random(60, 120));
-    //T = 120;
+  Arc(float x, float y) {
+    super(x, y);
 
-    d1     = random(size);
-    d2     = random(d1, size);
+    T      = floor(random(20, 30));
+    float size = random(200, height);
+
+    d1     = random(size*.9);
+    d2     = d1 + random( (size-d1)*.8 );
     angle  = random(TWO_PI);
-    len    = random(TWO_PI);
-    dir    = random(2)<1 ?1 :-1;
-    off    = 1;
+    len    = angle + random(PI);
+    off    = 4;
   }
 
-  void render(PGraphics pg) {
-    //pg.push();
-    //pg.translate(x, y);
-    //renderArc(pg, t);
-    //pg.pop();
-  }
-
-  void renderArc(PGraphics pg, float t) {
+  void gradientArc(PGraphics pg, float t) {
     pg.push();
+
+    pg.blendMode(BLEND);
     pg.translate(x, y);
     pg.noFill();
-    pg.stroke( 255,0,0 );
-    
-    if(dir == 1) pg.stroke(0,0,255 );
-    
+    pg.stroke( BLACK );
     pg.strokeWeight(off);
 
     int n = floor((d2-d1)/off);
-    for (int i=0; i<n*EA.easeOutExpo(t); i++) {
+    for (int i=0; i<n*EA.easeInOutExpo(t); i++) {
       float d = map(i, 0, n, d1, d2);
       pg.arc(0, 0, d, d, angle, len);
     }
 
-    //pg.stroke(RED);
-    //pg.strokeWeight(2);
-    //pg.arc(0, 0, d1, d1, 0, TWO_PI);
-    //pg.arc(0, 0, d2, d2, 0, TWO_PI);
     pg.pop();
   }
 
-  void renderBlendDifference(PGraphics pg) {
+  void render(PGraphics pg) {
     pg.push();
-    renderArc(pg, t);
+    float t1 = EA.clamp(t, 0, 0.5, true);
+    float t2 = EA.clamp(t, 0.5, 1, true);
+
+    if (t < 0.5)
+      gradientArc(pg, t1);
+    else
+      gradientArc(pg, 1-t2);
     pg.pop();
   }
 }

@@ -1,45 +1,44 @@
 class MGSystem {
 
-  ArrayList<MG> mgs;
+  ArrayList<MG>       mgs;
+  boolean           black;
 
   MGSystem() {
-    mgs = new ArrayList<MG>();
-
-    int m = 100;
-
-    for (int i=0; i<64; i++)
-      mgs.add(new Arc(width/2, height/2, random(m, height)));
-
-    //mgs.add(new Taichi(width/2, height/2, 378));
+    mgs   = new ArrayList<MG>();
+    black = true;
   }
 
   void update() {
-    for (MG mg : mgs) {
+    for (int i = mgs.size() - 1; i > -1; i--) {
+      MG mg = mgs.get(i);
       mg.update();
+
+      if (mg.done) {
+        mgs.remove(i);
+        mg.fade();
+      }
     }
   }
 
   void render(PGraphics pg) {
-    pg.background(WHITE);
+    pg.beginDraw();
+    pg.background(this.black ?BLACK :WHITE);
+
+    pg.strokeCap(SQUARE);
+    pg.blendMode(DIFFERENCE);
 
     for (MG mg : mgs) {
       mg.render(pg);
     }
 
-    beginBlendDifference(pg);
-    for (MG mg : mgs) {
-      mg.renderBlendDifference(pg);
-    }
-    endBlendDifference(pg);
-  }
-
-  void beginBlendDifference(PGraphics pg) {
-    pg.beginDraw();
-    gl.glEnable(GL3.GL_BLEND);
-    gl.glBlendFunc(GL3.GL_ONE_MINUS_DST_COLOR, GL3.GL_ZERO);
-  }
-
-  void endBlendDifference(PGraphics pg) {
     pg.endDraw();
+  }
+
+  void addMG (MG mg) {
+    this.mgs.add(mg);
+  }
+
+  void reverse() {
+    black = !black;
   }
 }

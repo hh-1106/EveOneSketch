@@ -1,24 +1,20 @@
 import ch.bildspur.postfx.builder.*;
 import ch.bildspur.postfx.pass.*;
 import ch.bildspur.postfx.*;
-import com.jogamp.opengl.*;
 
-GL3                        gl;
+
 PostFX                     fx;
 
 void SetupPostFX(PApplet app) {
   fx = new PostFX(app);
-  gl = GLContext.getCurrentGL().getGL3();
 }
 
 void ApplyPostFX(PGraphics pg_) {
   blendMode(SCREEN);
+
   fx.render(pg_)
-    .bloom(0.2, 10, 5)
-    //.invert()
-    //.toon()
-    //.rgbSplit(30)
-    .vignette(0.9, 0.4)
+    .bloom(0.1, 9, 9)
+    .rgbSplit(10)
     .compose();
 }
 
@@ -26,7 +22,7 @@ color RED          = #FC6255;
 color GREEN        = #83C167;
 color BLUE         = #58C4DD;
 color GREY         = #888888;
-color BLACK        = #1a181b;
+color BLACK        = #040404;
 color WHITE        = #eeeeee;
 color YELLOW       = #FFFF00;
 color ORANGE       = #FF862F;
